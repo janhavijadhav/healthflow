@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: healthflow_raw
+    database: healthflow-analytics-500100
+    schema: healthflow_dev
+    description: Raw healthcare claims data processed by PySpark
+    tables:
+      - name: patients
+        description: Patient demographics from Synthea
+      - name: encounters
+        description: Healthcare encounters and claim costs
+      - name: conditions
+        description: Patient diagnoses and conditions
+      - name: medications
+        description: Prescribed medications and costs

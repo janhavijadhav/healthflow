@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Environment
+.env
+*.env.local
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/.terraform.lock.hcl
+
+# dbt
+transformation/dbt/target/
+transformation/dbt/dbt_packages/
+transformation/dbt/logs/
+
+# Data files
+data/raw/*
+data/sample/*
+!data/raw/.gitkeep
+!data/sample/.gitkeep
+
+# GCP credentials — never commit
+gcp-key.json
+*.json.key
+service-account*.json
+
+# dbt compiled output and logs
+transformation/dbt/healthflow_dbt/target/
+transformation/dbt/healthflow_dbt/logs/
+transformation/dbt/healthflow_dbt/dbt_packages/
+
+# Lambda build artifact
+terraform/lambda_function.zip
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code local config
+.claude/

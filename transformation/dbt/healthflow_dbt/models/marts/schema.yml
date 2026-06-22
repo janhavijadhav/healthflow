@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: mart_claims_summary
+    description: Claims with patient demographics for analytics
+    columns:
+      - name: encounter_id
+        tests:
+          - unique
+          - not_null
+      - name: cost_tier
+        tests:
+          - accepted_values:
+              values: ['zero_cost', 'low', 'medium', 'high']
+      - name: age_group
+        tests:
+          - accepted_values:
+              values: ['pediatric', 'adult', 'senior']
+
+  - name: mart_patient_metrics
+    description: Per-patient rollup of encounters, conditions, medications
+    columns:
+      - name: patient_id
+        tests:
+          - unique
+          - not_null

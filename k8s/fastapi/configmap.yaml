@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: healthflow-config
+  namespace: healthflow
+data:
+  RAW_BUCKET: "healthflow-raw-dev-805046891516"
+  PROCESSED_BUCKET: "healthflow-processed-dev-805046891516"
+  CURATED_BUCKET: "healthflow-curated-dev-805046891516"
+  GCP_PROJECT: "healthflow-analytics-500100"
+  BQ_DATASET: "healthflow_dev"
+  AWS_REGION: "us-east-1"
+  ENVIRONMENT: "dev"
