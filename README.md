@@ -4,7 +4,11 @@
 
 ### Cloud-Native Healthcare Claims Analytics Pipeline
 
-HealthFlow is an end-to-end data engineering platform that ingests synthetic Medicare claims data, transforms it across a 3-zone AWS data lakehouse, models analytical datasets in Google BigQuery using dbt, and exposes curated metrics through a FastAPI REST API — all orchestrated by Apache Airflow running on Kubernetes.
+HealthFlow is an end-to-end data engineering platform that ingests synthetic Medicare claims data, transforms it across a 3-zone AWS data lakehouse, models analytical datasets in Google BigQuery using dbt, and surfaces curated metrics through a live Streamlit analytics dashboard — all orchestrated by Apache Airflow running on Kubernetes.
+
+<br/>
+
+[![Live Dashboard](https://img.shields.io/badge/Live%20Dashboard-healthflow006.streamlit.app-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://healthflow006.streamlit.app/)
 
 <br/>
 
@@ -13,6 +17,7 @@ HealthFlow is an end-to-end data engineering platform that ingests synthetic Med
 ![Terraform](https://img.shields.io/badge/Terraform-IaC-7B42BC?style=flat-square&logo=terraform&logoColor=white)
 ![GCP](https://img.shields.io/badge/GCP-BigQuery-4285F4?style=flat-square&logo=googlecloud&logoColor=white)
 ![dbt](https://img.shields.io/badge/dbt-Core-FF694B?style=flat-square&logo=dbt&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
 ![Airflow](https://img.shields.io/badge/Airflow-3.x%20on%20K8s-017CEE?style=flat-square&logo=apacheairflow&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-REST%20API-009688?style=flat-square&logo=fastapi&logoColor=white)
 
@@ -34,6 +39,7 @@ From raw CSVs to analytics-ready REST endpoints, every step is automated, tested
 - **Event-driven ingestion** — AWS Lambda fires on every S3 PutObject in the claims prefix; Glue Crawlers auto-catalog schemas
 - **PySpark batch transformation** — raw CSVs converted to Snappy-compressed Parquet in the processed zone
 - **dbt analytics engineering** — staging views + mart tables built on BigQuery, with 19/19 data quality tests passing
+- **Live Streamlit dashboard** — 5-page analytics app querying BigQuery directly, deployed publicly on Streamlit Cloud with a dark clinical theme
 - **Airflow on Kubernetes** — 6-task DAG orchestrates the full pipeline on a daily schedule
 - **FastAPI REST API** — 7 endpoints serving live BigQuery data with Swagger docs
 - **Infrastructure as Code** — all 18 AWS resources provisioned via Terraform
@@ -70,9 +76,10 @@ Synthea Synthetic EHR Data
 └──────────────┬───────────────────────┘
                │
                ▼
-        FastAPI REST API
-         7 live endpoints
-         /docs → Swagger
+        FastAPI REST API          Streamlit Dashboard
+         7 live endpoints    ◄──  5 pages · dark theme
+         /docs → Swagger          Hosted on Streamlit Cloud
+                                  healthflow006.streamlit.app
 
 Apache Airflow 3.x on Kubernetes
 orchestrates all stages daily at 06:00 UTC
@@ -95,6 +102,19 @@ Terraform provisions all AWS infrastructure
 ---
 
 ## Screenshots
+
+### Live Analytics Dashboard
+
+> **[healthflow006.streamlit.app](https://healthflow006.streamlit.app/)** — publicly hosted, queries BigQuery in real time.
+
+The dashboard has 5 pages:
+- **Overview** — KPI metrics, monthly claims trend, cost tier breakdown, geographic snapshot
+- **Claims Analytics** — filterable by encounter class, cost tier, and age group
+- **Patient Explorer** — per-patient rollup with demographic and clinical charts
+- **Provider Leaderboard** — ranked by billing volume, claims count, or patient reach
+- **Pipeline Overview** — live row counts from BigQuery, dbt test results, tech stack
+
+---
 
 ### Apache Airflow on Kubernetes
 
@@ -155,6 +175,7 @@ Terraform provisions all AWS infrastructure
 | Analytics Engineering | dbt Core · Google BigQuery |
 | Orchestration | Apache Airflow 3.x · Kubernetes · Helm |
 | Serving | FastAPI · Uvicorn |
+| Dashboard | Streamlit · Plotly · Streamlit Cloud |
 | CI/CD | GitHub Actions |
 | Language | Python 3.12 |
 | Data Source | Synthea Synthetic EHR |
@@ -174,6 +195,7 @@ Terraform provisions all AWS infrastructure
 - Data quality validation with Great Expectations
 - CI/CD pipeline with GitHub Actions (lint, test, Terraform fmt)
 - Container orchestration with Kubernetes and Helm
+- Interactive analytics dashboard with Streamlit and Plotly (multi-page, live BigQuery, dark clinical theme)
 
 ---
 
@@ -183,7 +205,6 @@ Terraform provisions all AWS infrastructure
 - Grafana dashboards for pipeline observability and data quality monitoring
 - Expand ingestion to all 18 Synthea source tables
 - Real-time streaming ingestion with Amazon Kinesis
-- Streamlit analytics dashboard over the FastAPI layer
 - Production Kubernetes deployment on Amazon EKS
 
 ---
