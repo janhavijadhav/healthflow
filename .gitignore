@@ -32,6 +32,9 @@ gcp-key.json
 *.json.key
 service-account*.json
 
+# Streamlit secrets — never commit
+.streamlit/secrets.toml
+
 # dbt compiled output and logs
 transformation/dbt/healthflow_dbt/target/
 transformation/dbt/healthflow_dbt/logs/

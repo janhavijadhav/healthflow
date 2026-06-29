@@ -1,0 +1,15 @@
+# Requirements for the Streamlit dashboard only.
+# Point Streamlit Cloud to this file:
+#   App settings > Advanced > Python requirements file path → streamlit_requirements.txt
+#
+# The root requirements.txt includes PySpark and dbt which Streamlit Cloud
+# cannot install (PySpark needs Java; dbt is not needed for the UI).
+
+streamlit>=1.36.0
+plotly>=5.22.0
+google-cloud-bigquery>=3.25.0
+google-auth>=2.29.0
+pandas>=2.2.0
+pyarrow>=15.0.0
+db-dtypes>=1.2.0
+python-dotenv>=1.0.0
