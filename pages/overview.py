@@ -7,7 +7,6 @@ from utils.style import BLUE, COLORS, PURPLE, TEAL, XGRID, YGRID, plot_layout, s
 
 # ---------- Data ----------
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_kpis():
     return bq(f"""
         SELECT
@@ -20,7 +19,6 @@ def load_kpis():
         FROM {CLAIMS}
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_trend():
     return bq(f"""
         SELECT
@@ -31,11 +29,9 @@ def load_trend():
         GROUP BY 1 ORDER BY 1
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_tiers():
     return bq(f"SELECT cost_tier, COUNT(*) AS n FROM {CLAIMS} GROUP BY 1")
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_classes():
     return bq(f"""
         SELECT encounter_class, COUNT(*) AS claims,
@@ -44,7 +40,6 @@ def load_classes():
         GROUP BY 1 ORDER BY claims DESC
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_ages():
     return bq(f"""
         SELECT age_group,
@@ -54,14 +49,12 @@ def load_ages():
         FROM {CLAIMS} WHERE age_group IS NOT NULL GROUP BY 1
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_gender():
     return bq(f"""
         SELECT gender, COUNT(DISTINCT patient_id) AS patients
         FROM {PATIENTS} WHERE gender IS NOT NULL GROUP BY 1
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_state_top():
     return bq(f"""
         SELECT state, COUNT(*) AS claims, ROUND(SUM(total_claim_cost), 0) AS total_cost

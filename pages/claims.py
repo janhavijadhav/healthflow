@@ -40,7 +40,6 @@ WHERE = (
 
 # ---------- Data ----------
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_kpis(where: str):
     return bq(f"""
         SELECT
@@ -52,7 +51,6 @@ def load_kpis(where: str):
         FROM {CLAIMS} {where}
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_state_cost(where: str):
     return bq(f"""
         SELECT state,
@@ -64,7 +62,6 @@ def load_state_cost(where: str):
         GROUP BY 1 ORDER BY total_cost DESC LIMIT 15
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_class_split(where: str):
     return bq(f"""
         SELECT encounter_class,
@@ -74,7 +71,6 @@ def load_class_split(where: str):
         GROUP BY 1 ORDER BY avg_payer DESC
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_trend(where: str):
     return bq(f"""
         SELECT DATE(encounter_year, encounter_month, 1) AS month,
@@ -84,7 +80,6 @@ def load_trend(where: str):
         GROUP BY 1 ORDER BY 1
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_table(where: str, limit: int):
     return bq(f"""
         SELECT

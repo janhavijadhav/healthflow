@@ -21,7 +21,6 @@ _rank_col = {
 
 # ---------- Data ----------
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_providers(n: int):
     return bq(f"""
         SELECT
@@ -40,7 +39,6 @@ def load_providers(n: int):
         LIMIT {n}
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_kpis():
     return bq(f"""
         SELECT

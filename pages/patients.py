@@ -42,7 +42,6 @@ WHERE = _where()
 
 # ---------- Data ----------
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_kpis(where: str):
     return bq(f"""
         SELECT
@@ -56,7 +55,6 @@ def load_kpis(where: str):
         FROM {PATIENTS} {where}
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_race(where: str):
     return bq(f"""
         SELECT race, COUNT(*) AS patients,
@@ -71,7 +69,6 @@ def load_race(where: str):
         GROUP BY 1 ORDER BY patients DESC LIMIT 10
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_age_dist(where: str):
     return bq(f"""
         SELECT age_years, COUNT(*) AS n
@@ -80,7 +77,6 @@ def load_age_dist(where: str):
         GROUP BY 1 ORDER BY 1
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_scatter(where: str):
     return bq(f"""
         SELECT patient_id, age_group, gender,
@@ -90,7 +86,6 @@ def load_scatter(where: str):
         LIMIT 800
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_conditions(where: str):
     return bq(f"""
         SELECT chronic_conditions, COUNT(*) AS patients
@@ -99,7 +94,6 @@ def load_conditions(where: str):
         GROUP BY 1 ORDER BY 1
     """)
 
-@st.cache_data(ttl=3600, show_spinner=False)
 def load_table(where: str, limit: int):
     return bq(f"""
         SELECT patient_id, gender, race, state, age_years, age_group,
