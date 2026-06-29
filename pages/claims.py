@@ -140,9 +140,9 @@ with col2:
                          y=cls_split["avg_payer"], marker_color=TEAL, marker_line_width=0))
     fig.add_trace(go.Bar(name="Out-of-Pocket",  x=cls_split["encounter_class"],
                          y=cls_split["avg_oop"],   marker_color=ORANGE, marker_line_width=0))
-    fig.update_layout(**plot_layout(380, "Avg Coverage vs Out-of-Pocket by Class"),
-                      barmode="group", xaxis=XGRID, yaxis={**YGRID, "tickprefix": "$"},
-                      legend=dict(orientation="h", x=0, y=1.12))
+    fig.update_layout(**plot_layout(380, "Avg Coverage vs Out-of-Pocket by Class",
+                                    barmode="group", xaxis=XGRID, yaxis={**YGRID, "tickprefix": "$"},
+                                    legend=dict(orientation="h", x=0, y=1.12)))
     st.plotly_chart(fig, use_container_width=True)
 
 # Row 2 — trend

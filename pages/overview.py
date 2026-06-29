@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 from utils.bq_client import CLAIMS, PATIENTS, bq
-from utils.style import BLUE, COLORS, PURPLE, TEAL, XGRID, YGRID, plot_layout, section
+from utils.style import BLUE, COLORS, PURPLE, TEAL, XGRID, YGRID, fmt_money, page_header, plot_layout, section
 
 # ---------- Data ----------
 
@@ -64,9 +64,7 @@ def load_state_top():
 
 # ---------- Render ----------
 
-st.markdown("## Overview")
-st.markdown('<span style="color:#8892a4;">All claims activity across the full synthetic EHR pipeline.</span>', unsafe_allow_html=True)
-st.divider()
+page_header("Overview", "All claims activity across the full synthetic EHR pipeline.")
 
 with st.spinner("Querying BigQuery..."):
     kpis    = load_kpis()
@@ -82,12 +80,12 @@ o = kpis.iloc[0]
 # KPIs
 section("Key Metrics")
 c1, c2, c3, c4, c5, c6 = st.columns(6)
-c1.metric("Total Claims",    f"{int(o['total_claims']):,}")
-c2.metric("Unique Patients", f"{int(o['total_patients']):,}")
-c3.metric("Total Billed",    f"${int(o['total_cost']):,}")
-c4.metric("Avg Claim Cost",  f"${o['avg_cost']:,.2f}")
-c5.metric("Payer Coverage",  f"{o['payer_pct']}%")
-c6.metric("Avg Out-of-Pocket", f"${o['avg_oop']:,.2f}")
+c1.metric("Total Claims",     f"{int(o['total_claims']):,}")
+c2.metric("Unique Patients",  f"{int(o['total_patients']):,}")
+c3.metric("Total Billed",     fmt_money(int(o['total_cost'])))
+c4.metric("Avg Claim Cost",   f"${int(o['avg_cost']):,}")
+c5.metric("Payer Coverage",   f"{o['payer_pct']}%")
+c6.metric("Avg Out-of-Pocket",f"${int(o['avg_oop']):,}")
 
 # Row 1 — trend + tiers
 section("Volume & Cost Distribution")
@@ -116,8 +114,8 @@ with col2:
         marker=dict(colors=COLORS, line=dict(color="#0d1117", width=2)),
         hovertemplate="%{label}<br>%{value:,} claims (%{percent})<extra></extra>",
     ))
-    fig.update_layout(**plot_layout(290, "Cost Tier Breakdown"),
-                      legend=dict(orientation="v", x=1.0, y=0.5, font=dict(size=11)))
+    fig.update_layout(**plot_layout(290, "Cost Tier Breakdown",
+                                    legend=dict(orientation="v", x=1.0, y=0.5, font=dict(size=11))))
     st.plotly_chart(fig, use_container_width=True)
 
 # Row 2 — encounter class + age group
@@ -173,8 +171,8 @@ with col6:
         marker=dict(colors=[BLUE, "#e74c3c"], line=dict(color="#0d1117", width=2)),
         hovertemplate="%{label}<br>%{value:,} patients<extra></extra>",
     ))
-    fig.update_layout(**plot_layout(260, "Gender"),
-                      legend=dict(orientation="h", x=0.5, xanchor="center", y=-0.15, font=dict(size=11)))
+    fig.update_layout(**plot_layout(260, "Gender",
+                                    legend=dict(orientation="h", x=0.5, xanchor="center", y=-0.15, font=dict(size=11))))
     st.plotly_chart(fig, use_container_width=True)
 
 with col7:

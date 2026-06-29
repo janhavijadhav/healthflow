@@ -130,13 +130,13 @@ fig.add_trace(go.Bar(
     marker_color=ORANGE, marker_line_width=0,
     hovertemplate="%{x}<br>OOP: $%{y:,.0f}<extra></extra>",
 ))
-fig.update_layout(
-    **plot_layout(300, "Payer Coverage vs Out-of-Pocket by Provider"),
+fig.update_layout(**plot_layout(
+    300, "Payer Coverage vs Out-of-Pocket by Provider",
     barmode="stack", bargap=0.2,
     xaxis=dict(showgrid=False, zeroline=False, tickangle=-45),
     yaxis={**YGRID, "tickprefix": "$"},
     legend=dict(orientation="h", x=0, y=1.1),
-)
+))
 st.plotly_chart(fig, use_container_width=True)
 
 # Table
