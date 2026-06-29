@@ -27,7 +27,7 @@ def get_bq_client() -> bigquery.Client:
         info = st.secrets["gcp_service_account"]
         creds = service_account.Credentials.from_service_account_info(
             info,
-            scopes=["https://www.googleapis.com/auth/bigquery.readonly"],
+            scopes=["https://www.googleapis.com/auth/bigquery"],
         )
         return bigquery.Client(credentials=creds, project=PROJECT)
     except (KeyError, AttributeError):
@@ -39,7 +39,7 @@ def get_bq_client() -> bigquery.Client:
             info = json.load(f)
         creds = service_account.Credentials.from_service_account_info(
             info,
-            scopes=["https://www.googleapis.com/auth/bigquery.readonly"],
+            scopes=["https://www.googleapis.com/auth/bigquery"],
         )
         return bigquery.Client(credentials=creds, project=PROJECT)
 
